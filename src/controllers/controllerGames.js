@@ -1,5 +1,6 @@
 import { db } from '../database/db.js';
 
+//Função para cadastrar jogos
 export async function cadastroDeGames(require, response) {
   const { name, image, stockTotal, pricePerDay } = require.body;
   try {
@@ -29,6 +30,7 @@ export async function cadastroDeGames(require, response) {
   }
 }
 
+//Função para ver os jogos existentes
 export async function solicitacaoDeGames(_require, response) {
   try {
     const soma = await db.query('select * from games');

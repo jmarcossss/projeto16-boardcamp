@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import rotaGames from './rotaGames.js';
-import rotaCustomers from './rotaCustomers.js';
-import rentals from './rotaRentals.js';
+import { Router } from "express";
+import rotaGames from "./rotaGames.js";
+import rotaCustomers from "./rotaCustomers.js";
+import rentals from "./rotaRentals.js";
 
 const router = Router();
 
