@@ -1,22 +1,22 @@
 //Importação de bibliotecas padrão
 import { Router } from "express";
-import { listRentals } from "../controllers/controllerRentals.js";
-import { insertRental } from "../controllers/controllerRentals.js";
-import { finishRental } from "../controllers/controllerRentals.js";
-import { deleteRental } from "../controllers/controllerRentals.js";
+import { solicitacaoDeRentals } from "../controllers/controllerRentals.js";
+import { cadastroDeRentals } from "../controllers/controllerRentals.js";
+import { finalizacaoDeRentals } from "../controllers/controllerRentals.js";
+import { deletacaoDeRentals } from "../controllers/controllerRentals.js";
 import { padraoMiddleware } from "../middlewares/padraoMiddleware.js";
 import { padraoSchemaRentals2 } from "../schemas/padraoSchemas.js";
 
 const rotaRentals = Router();
 
 //Lista dos rental para ser exibida
-rotaRentals.get("/rentals", listRentals);
+rotaRentals.get("/rentals", solicitacaoDeRentals);
 //Cadastro de um rental
-rotaRentals.post("/rentals", padraoMiddleware(padraoSchemaRentals2), insertRental);
+rotaRentals.post("/rentals", padraoMiddleware(padraoSchemaRentals2), cadastroDeRentals);
 //Cadastro de um rental por id
-rotaRentals.post("/rentals/:id/return", finishRental);
+rotaRentals.post("/rentals/:id/return", finalizacaoDeRentals);
 //Deletar um rental
-rotaRentals.delete("/rentals/:id", deleteRental);
+rotaRentals.delete("/rentals/:id", deletacaoDeRentals);
 
 //Cadastro de um jogo
 //Lista dos games para ser exibida

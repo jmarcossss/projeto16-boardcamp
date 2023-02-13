@@ -2,7 +2,7 @@ import { db } from '../database/db.js';
 
 
 //Função que lista com todos os aluguéis
-export async function listRentals(_req, response) {
+export async function solicitacaoDeRentals(_req, response) {
   try {
     const rentals = await db.query(`
     select rentals.*, json_build_object('id', customers.id, 'name', customers.name) AS customer, json_build_object('id', games.id, 'name', games.name) AS game
@@ -16,7 +16,7 @@ export async function listRentals(_req, response) {
 }
 
 //Função que insere todos os rentals
-export async function insertRental(require, response) {
+export async function cadastroDeRentals(require, response) {
   const { customerId, gameId, daysRented } = require.body;
   try {
     const jueGO = await db.query('select * from games where id = $1', [gameId,]);
@@ -48,7 +48,7 @@ export async function insertRental(require, response) {
 }
 
 //Função que finaliza todos os rentals
-export async function finishRental(require, response) {
+export async function finalizacaoDeRentals(require, response) {
   const hhGO = Number(require.params.id);
   //Verificação para ver se o número é menor que 1 ou não é inteiro, logo retornar status 400
   if(!hhGO || hhGO < 1 || !Number.isSafeInteger(hhGO)) {
@@ -58,8 +58,8 @@ export async function finishRental(require, response) {
     let vitT = 0;
     const rentGO2 = await db.query('select * from rentals where id = $1', [hhGO,]);
     if(rentGO2.rowCount !== 1) { return response.sendStatus(404); }
-    const rentalIsFinished = await db.query('select * from rentals where id = $1 AND "returnDate" IS NOT NULL', [hhGO]);
-    if(rentalIsFinished.rowCount !== 0) { return response.sendStatus(400); }
+    const rConc = await db.query('select * from rentals where id = $1 AND "returnDate" IS NOT NULL', [hhGO]);
+    if(rConc.rowCount !== 0) { return response.sendStatus(400); }
     //Variáveis que são usadas com funções matemáticas para controlar o tempo de forma correta (tipo Flash :))
     const rental = rentGO2.rows[0];
     const minute = new Date().getTime() - new Date(rental.rentDate).getTime();
@@ -78,7 +78,7 @@ export async function finishRental(require, response) {
 }
 
 //Função que deleta os rentals
-export async function deleteRental(require, response) {
+export async function deletacaoDeRentals(require, response) {
   //A ideia é a mesma para as duas funções, fazer comparações e depois consultar o que é solicitado
   const hhGO = Number(require.params.id);
   //Verificação para ver se o número é menor que 1 ou não é inteiro, logo retornar status 400
@@ -86,8 +86,8 @@ export async function deleteRental(require, response) {
   try {
     const rentGO3 = await db.query('select * from rentals where id = $1', [hhGO,]);
     if(rentGO3.rowCount !== 1) { return response.sendStatus(404); }
-    const rentalIsFinished = await db.query('select * from rentals where id = $1 AND "returnDate" IS NOT NULL', [hhGO]);
-    if(rentalIsFinished.rowCount !== 1) { return response.sendStatus(400); }
+    const rConc = await db.query('select * from rentals where id = $1 AND "returnDate" IS NOT NULL', [hhGO]);
+    if(rConc.rowCount !== 1) { return response.sendStatus(400); }
     const deleteRental = await db.query('delete from rentals where id = $1', [hhGO,]);
     if(deleteRental.rowCount === 1) { return response.sendStatus(200); }
   }
