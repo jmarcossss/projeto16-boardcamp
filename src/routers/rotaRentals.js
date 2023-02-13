@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { listRentals } from "../controllers/controllerRentals.js";
 import { insertRental } from "../controllers/controllerRentals.js";
+import { finishRental } from "../controllers/controllerRentals.js";
+import { deleteRental } from "../controllers/controllerRentals.js";
 import { padraoMiddleware } from "../middlewares/padraoMiddleware.js";
 import { padraoSchemaRentals2 } from "../schemas/padraoSchemas.js";
 
