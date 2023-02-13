@@ -1,3 +1,4 @@
+//Importação de bibliotecas padrão
 import { Router } from "express";
 import { listRentals } from "../controllers/controllerRentals.js";
 import { insertRental } from "../controllers/controllerRentals.js";

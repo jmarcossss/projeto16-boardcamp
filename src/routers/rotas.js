@@ -1,3 +1,4 @@
+//Importação de bibliotecas padrão
 import { Router } from "express";
 import rotaGames from "./rotaGames.js";
 import rotaCustomers from "./rotaCustomers.js";
