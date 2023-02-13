@@ -30,7 +30,7 @@ export async function solicitacaoDeCustomers(_req, response) {
     response.send(soma.rows);
   }
   catch(error) {
-    response.sendStatus(500);
+    response.sendStatus(404);
   }
 }
 
