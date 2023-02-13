@@ -1,12 +1,14 @@
-import express from "express";
-import { cadastroDePoll } from "../controllers/controlerPoll.js";
-import { solicitacaoDePoll } from "../controllers/controlerPoll.js";
-import { middlewarePoll } from "../middlewares/middlewarePoll.js";
+import { Router } from 'express';
+import { cadastroDeGames } from '../controllers/controllerGames.js';
+import { solicitacaoDeGames } from '../controllers/controllerGames.js';
+import { padraoMiddleware } from '../middlewares/padraoMiddleware.js';
+import { gameSchema } from '../schemas/padraoSchemas.js';
 
-const rotaGames = express.Router();
+const rotaGames = Router();
+
 //Cadastro de um jogo
-rotaGames.post("/games", middlewarePoll, cadastroDePoll);
-//Lista dos jogos
-rotaGames.get("/games", solicitacaoDePoll);
+rotaGames.post('/games', padraoMiddleware(gameSchema), cadastroDeGames);
+//Lista dos games para ser exibida
+rotaGames.get('/games', solicitacaoDeGames);
 
-export default rotaGames; 
+export default rotaGames;

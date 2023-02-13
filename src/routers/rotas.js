@@ -1,15 +1,15 @@
-import express from "express"
-import rotaGames from "./rotaGames.js";
-// import rotaCustomers from "./rotaCustomers.js";
-// import rotaRentals from "./rotaRentals.js";
+import { Router } from 'express';
+import rotaGames from './rotaGames.js';
+import rotaCustomers from './rotaCustomers.js';
+import rentals from './rotaRentals.js';
 
-const rotas = express.Router();
+const router = Router();
 
-//Rota dos jogos
-rotas.use(rotaGames);
-// //Rota dos clientes
-// rotas.use(rotaCustomers);
-// //Rota dos alugueis
-// rotas.use(rotaRentals);
+//Criação dos jogos
+router.use(rotaGames);
+//Criação dos customers
+router.use(rotaCustomers);
+//Criação das rentals
+router.use(rentals);
 
-export default rotas; 
+export default router;
