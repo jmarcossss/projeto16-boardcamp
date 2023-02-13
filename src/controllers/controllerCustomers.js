@@ -4,17 +4,14 @@ import { db } from '../database/db.js';
 export async function cadastroDeCustomers(require, response) {
   const { name, phone, cpf, birthday } = require.body;
   try {
-    const contador = await db.query(
-      'select * from customers where cpf = $1',
-      [cpf]
-    );
+    //Consulta para ver os customers que foram cadastrados por id
+    const contador = await db.query('select * from customers where cpf = $1', [cpf]);
+    //Se o cont for diferente de 0, é porque aquele customer já existe/foi criado
     if(contador.rowCount > 0) {
       return response.sendStatus(409);
     }
-    const soma = await db.query(
-      'insert into customers (name, phone, cpf, birthday) VALUES ($1, $2, $3, $4)',
-      [name, phone, cpf, birthday]
-    );
+    //Inserção de customers
+    const soma = await db.query('insert into customers (name, phone, cpf, birthday) VALUES ($1, $2, $3, $4)', [name, phone, cpf, birthday] );
     if(soma.rowCount === 0) {
       return response.sendStatus(400);
     }
@@ -28,6 +25,7 @@ export async function cadastroDeCustomers(require, response) {
 //Função para exibir os customers existentes
 export async function solicitacaoDeCustomers(_req, response) {
   try {
+    //Consulta para ver todos os customers
     const soma = await db.query('select * from customers');
     response.send(soma.rows);
   }
@@ -38,14 +36,13 @@ export async function solicitacaoDeCustomers(_req, response) {
 
 //Função para exibir os customers existentes
 export async function solicitacaoDeCustomers2(require, response) {
-  const customer = Number(require.params.id);
-  if(!customer || customer < 1 || !Number.isSafeInteger(customer)) {
+  const contador = Number(require.params.id);
+  if(!contador || contador < 1 || !Number.isSafeInteger(contador)) {
     return response.sendStatus(400);
   }
   try {
-    const soma = await db.query('select * from customers where id = $1', [
-      customer,
-    ]);
+    //Consulta para ver todos os customers por id
+    const soma = await db.query('select * from customers where id = $1', [customer,]);
     if(soma.rowCount === 0) {
       return response.sendStatus(404);
     }
@@ -80,7 +77,7 @@ export async function atualizaCustomers(require, response) {
       return response.sendStatus(409);
     }
     const updateCustomer = await db.query(
-      'UPDATE customers SET name = $1, phone = $2, cpf = $3, birthday = $4 where id = $5',
+      'update customers set name = $1, phone = $2, cpf = $3, birthday = $4 where id = $5',
       [name, phone, cpf, birthday, valueC]
     );
     //Se não existir, dá status 400
